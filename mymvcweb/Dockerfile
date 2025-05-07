@@ -7,9 +7,11 @@ WORKDIR /app
 COPY mymvcweb/mymvcweb.csproj ./
 RUN dotnet restore
 
+# Remove previous build artifacts to ensure a clean build
+RUN rm -rf mymvcweb/obj mymvcweb/bin
+
 # Copy everything else and build
 COPY . ./
-RUN dotnet clean  # Clean up any previous build artifacts
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
